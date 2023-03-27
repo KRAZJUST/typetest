@@ -1,0 +1,43 @@
+html{
+  height: 100%;
+  font-family: 'Tebuchet MS';
+}
+
+body{
+  background-color: #000;
+  overscroll-behavior-x: hidden;
+  overscroll-behavior-y: hidden;
+}
+
+.code{
+  font-size: 20px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding-top: 50px;
+}
+
+.header1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  font-family: 'Lato';
+  font-size: 50px;
+  color: #fff;
+  margin-top: -1%;
+}
+
+.timer{
+  font-size: 40px;
+  font-family: 'Lato';
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding-top: 50px;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Type Test</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="dynamic.js"></script>
+</head>
+<body>
+
+<div class="header1"><p>
+  CODE TYPING TEST
+</p></div>
+
+<div class="code">
+  <pre>int main() {
+    int arr[10];
+    int i;
+
+    srand(time(NULL));
+
+    for (i = 0; i < 10; i++) {
+      arr[i] = rand() % 100 + 1;
+    }
+
+    printf("Random array: ");
+    for (i = 0; i < 10; i++) {
+      printf("%d ", arr[i]);
+    }
+    printf("\n");
+  
+    return 0;
+  }</pre>
+</div> 
+
+<div class="timer">
+<p style="color: #fff" id="timer">01:00:00</p>
+</div>
+
+<div>
+  <button onclick="stopTimer()">RESET</button>
+</div>
+
+</body>
+</html>
