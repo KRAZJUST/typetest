@@ -30,3 +30,23 @@ function stopTimer(){
 }
 
 document.addEventListener("keydown", startTimer);
+
+
+const text = document.getElementById('text').textContent;
+let characterCount = 0;
+let currentPosition = 0;
+
+document.addEventListener('keydown', (event) => {
+  if (currentPosition < text.length){
+    const currentChar = text.charAt(currentPosition);
+    const pressedChar = event.key;
+
+    if (currentChar == pressedChar){
+      characterCount++; 
+    }
+    currentPosition++;
+    document.getElementById('counter').textContent = '${currentPosition}';
+  }
+})
+
+console.log(text)
