@@ -32,21 +32,53 @@ function stopTimer(){
 document.addEventListener("keydown", startTimer);
 
 
-const text = document.getElementById('text').textContent;
-let characterCount = 0;
-let currentPosition = 0;
+document.addEventListener('DOMContentLoaded', function() {
+  const textElement = document.getElementById('text');
+  const textContent = textElement.textContent;
+  let characterCount = 0;
+  let currentPosition = 0;
+  const allowedKeys = /^[a-z0-9\s`~!@#$%^&*()_+\-=\[\]{}\\|;':",.<>\/\?]|Enter|Backspace|Delete$/;
+  
+  updateText();
 
-document.addEventListener('keydown', (event) => {
-  if (currentPosition < text.length){
-    const currentChar = text.charAt(currentPosition);
-    const pressedChar = event.key;
+  document.addEventListener('keydown', (event) => {
+    if (currentPosition < textContent.length){
+      const currentChar = textContent.charAt(currentPosition);
+      const pressedChar = event.key;
+      if (pressedChar.match(allowedKeys)) {
 
-    if (currentChar == pressedChar){
-      characterCount++; 
+      document.getElementById("currentChar").textContent = `${currentChar}`;
+
+      if (currentChar == pressedChar){
+        characterCount++;
+      }
+      updateText();
+      currentPosition++;
+
     }
-    currentPosition++;
-    document.getElementById('counter').textContent = '${currentPosition}';
-  }
+    const counter = document.getElementById('counter');
+    if (counter) {
+      counter.textContent = characterCount;
+    } else {
+      console.error('counter element not found');
+    }
+  } 
 })
+  
+  function updateText() {
+    let textHTML = '';
+    for (let i = 0; i < textContent.length; i++) {
+      const char = textContent.charAt(i);
+      if (i <= currentPosition) {
+        textHTML += `<span style="color: green">${char}</span>`;
+      } else {
+        textHTML += char;
+      }
+    }
+    textElement.innerHTML = `<pre>${textHTML}</pre>`;
+  }
 
-console.log(text)
+});
+
+
+console.log(document.getElementById('counter').textContent);
