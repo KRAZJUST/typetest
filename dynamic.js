@@ -29,17 +29,40 @@ function stopTimer(){
   timerRunning = false;
 }
 
+let characterCount = 0;
+let currentPosition = 0;
+
+function reset_count(){
+  characterCount = 0;
+  currentPosition = 0;
+
+  document.getElementById("currentChar").textContent = "none";
+  document.getElementById("counter").textContent = "0";  
+  document.getElementById("text").style.color = "white";
+}
+
+
 document.addEventListener("keydown", startTimer);
 
 
 document.addEventListener('DOMContentLoaded', function() {
   const textElement = document.getElementById('text');
   const textContent = textElement.textContent;
-  let characterCount = 0;
-  let currentPosition = 0;
   const allowedKeys = /^[a-z0-9\s`~!@#$%^&*()_+\-=\[\]{}\\|;':",.<>\/\?]|Enter|Backspace|Delete$/;
-  
+  const reset_button = document.getElementById('reset_button');
+
   updateText();
+
+  if(reset_button){
+    reset_button.addEventListener('click', function(){
+      stopTimer();
+      reset_count();
+    });
+  }
+  else{
+    console.error('Reset button listener not found.');
+  }
+
 
   document.addEventListener('keydown', (event) => {
     if (currentPosition < textContent.length){
