@@ -38,9 +38,12 @@ function reset_count(){
 
   document.getElementById("currentChar").textContent = "none";
   document.getElementById("counter").textContent = "0";  
-  document.getElementById("text").style.color = "white";
 }
 
+function reset_text(){
+  document.querySelector("text").style.color = "white";
+
+}
 
 document.addEventListener("keydown", startTimer);
 
@@ -57,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
     reset_button.addEventListener('click', function(){
       stopTimer();
       reset_count();
+      reset_text();
     });
   }
   else{
