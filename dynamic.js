@@ -51,7 +51,7 @@ document.addEventListener("keydown", startTimer);
 document.addEventListener('DOMContentLoaded', function() {
   const textElement = document.getElementById('text');
   const textContent = textElement.textContent;
-  const allowedKeys = /^[a-z0-9\s`~!@#$%^&*()_+\-=\[\]{}\\|;':",.<>\/\?]|Enter|Backspace|Delete$/;
+  const allowedKeys = /^[a-zA-Z0-9\s`~!@#$%^&*()_+\-=\[\]{}\\|;':",.<>\/\?]|Enter|Backspace|Delete$/;
   const reset_button = document.getElementById('reset_button');
 
   updateText();
@@ -72,7 +72,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (currentPosition < textContent.length){
       const currentChar = textContent.charAt(currentPosition);
       const pressedChar = event.key;
-      if (pressedChar.match(allowedKeys)) {
+    
+    if (pressedChar === "Shift") return;
+
+    if (pressedChar.match(allowedKeys)) {
 
       document.getElementById("currentChar").textContent = `${currentChar}`;
 
@@ -80,9 +83,17 @@ document.addEventListener('DOMContentLoaded', function() {
         characterCount++;
       }
       updateText();
-      currentPosition++;
-
+      
+      if (currentChar === '\n') { // Check for newline character
+        while (currentPosition < textContent.length && (textContent.charAt(currentPosition) === '\n' || textContent.charAt(currentPosition) === ' ')) {
+          currentPosition++;
+        }
+      }
+      else {
+        currentPosition++;
+      }
     }
+
     const counter = document.getElementById('counter');
     if (counter) {
       counter.textContent = characterCount;
