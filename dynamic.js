@@ -104,17 +104,36 @@ document.addEventListener('DOMContentLoaded', function() {
   } 
 })
   
+/*
+  Function to change the color of already proccesed text and the following
+  character to type.
+
+  #TODO fix that at the end of the line it shows beggining of the next line
+        as next character
+*/
   function updateText() {
     let textHTML = '';
     for (let i = 0; i < textContent.length; i++) {
       const char = textContent.charAt(i);
+      
       if (i <= currentPosition) {
-        textHTML += `<span style="color: green">${char}</span>`;
+        textHTML += `<span style="color: #FF8C00">${char}</span>`;
+      } else if (i === currentPosition + 1) {
+        textHTML += `<span style="color: #E75480">${char}</span>`;
       } else {
         textHTML += char;
       }
     }
     textElement.innerHTML = `<pre>${textHTML}</pre>`;
+
+    if(reset_button){
+      reset_button.addEventListener('click', function(){
+        textHTML = textHTML.split('#FF8C00').join('#FFFFFF');
+        textHTML = textHTML.split('#E75480').join('#FFFFFF');
+        textElement.innerHTML = `<pre>${textHTML}</pre>`;
+      });
+    }
+
   }
 
 });
