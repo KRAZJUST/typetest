@@ -1,5 +1,5 @@
 
-var count = 60 * 1000;
+var count = 30 * 1000;
 var timer;
 var timerRunning = false;
 
@@ -23,10 +23,10 @@ function startTimer(){
 }
 
 function stopTimer(){
-  clearInterval(timer);
-  count = 60 * 1000;
-  document.getElementById("timer").innerHTML = "01:00:00";
   timerRunning = false;
+  clearInterval(timer);
+  count = 30 * 1000;
+  document.getElementById("timer").innerHTML = "00:30:00";
 }
 
 let characterCount = 0;
@@ -73,7 +73,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const currentChar = textContent.charAt(currentPosition);
       const pressedChar = event.key;
     
-    if (pressedChar === "Shift") return;
+    if (pressedChar === "Shift"){return;}
+    if (!timerRunning){return;}
 
     if (pressedChar.match(allowedKeys)) {
 
