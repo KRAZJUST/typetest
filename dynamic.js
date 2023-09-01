@@ -48,11 +48,18 @@ document.addEventListener("keydown", function(event) {
   handleKey(event);
 });
 
-// Function to handle key presses and text highlighting
 function handleKey(event) {
   const textElement = document.getElementById('text');
   const reset_button = document.getElementById('reset_button');
   const allowedKeys = /^[a-zA-Z0-9\s`~!@#$%^&*()_+\-=\[\]{}\\|;':",.<>\/\?]|Enter|Backspace|Delete$/;
+
+  // Skip whitespace and newline characters until a non-whitespace character is found
+  while (currentPosition < textElement.textContent.length && (
+    textElement.textContent.charAt(currentPosition) === '\n' ||
+    textElement.textContent.charAt(currentPosition) === ' '
+  )) {
+    currentPosition++;
+  }
 
   const currentChar = textElement.textContent.charAt(currentPosition);
   const pressedChar = event.key;
@@ -94,6 +101,7 @@ function handleKey(event) {
     console.error('Reset button listener not found.');
   }
 }
+
 
 // Function to randomly choose one of the code snippets from json file
 function getRandomCodeSnippet(codeSnippets) {
@@ -143,7 +151,7 @@ function updateText() {
   }
   
   textElement.innerHTML = `<pre>${textHTML}</pre>`;
-  
+
   if(reset_button){
     reset_button.addEventListener('click', function(){
       textHTML = textHTML.split('#FF8C00').join('#FFFFFF');
