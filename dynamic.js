@@ -143,17 +143,20 @@ function updateText() {
   }
   
   textElement.innerHTML = `<pre>${textHTML}</pre>`;
-  /*if(reset_button){
+  
+  if(reset_button){
     reset_button.addEventListener('click', function(){
       textHTML = textHTML.split('#FF8C00').join('#FFFFFF');
       textHTML = textHTML.split('#E75480').join('#FFFFFF');
       textElement.innerHTML = `<pre>${textHTML}</pre>`;
     })
-  }*/
+  }
 }
 
 
 const textElement = document.getElementById('text');
+
+document.addEventListener('DOMContentLoaded', function(){
 const reset_button = document.getElementById('reset_button');
 
 if (reset_button) {
@@ -165,3 +168,4 @@ if (reset_button) {
 } else {
   console.error('Reset button listener not found.');
 }
+});
