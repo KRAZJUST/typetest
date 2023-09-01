@@ -1,4 +1,3 @@
-
 var count = 30 * 1000;
 var timer;
 var timerRunning = false;
@@ -41,102 +40,128 @@ function reset_count(){
 }
 
 function reset_text(){
-  document.querySelector("text").style.color = "white";
-
+  document.querySelector("#text pre").style.color = "white";
 }
 
-document.addEventListener("keydown", startTimer);
+document.addEventListener("keydown", function(event) {
+  startTimer(); // Start the timer on keydown
+  handleKey(event);
+});
 
-
-document.addEventListener('DOMContentLoaded', function() {
+// Function to handle key presses and text highlighting
+function handleKey(event) {
   const textElement = document.getElementById('text');
-  const textContent = textElement.textContent;
-  const allowedKeys = /^[a-zA-Z0-9\s`~!@#$%^&*()_+\-=\[\]{}\\|;':",.<>\/\?]|Enter|Backspace|Delete$/;
   const reset_button = document.getElementById('reset_button');
+  const allowedKeys = /^[a-zA-Z0-9\s`~!@#$%^&*()_+\-=\[\]{}\\|;':",.<>\/\?]|Enter|Backspace|Delete$/;
 
-  updateText();
+  const currentChar = textElement.textContent.charAt(currentPosition);
+  const pressedChar = event.key;
 
-  if(reset_button){
-    reset_button.addEventListener('click', function(){
+  if (pressedChar === "Shift") { return; }
+  if (!timerRunning) { return; }
+
+  if (pressedChar.match(allowedKeys)) {
+    document.getElementById("currentChar").textContent = `${currentChar}`;
+
+    if (currentChar == pressedChar) {
+      characterCount++;
+    }
+    updateText();
+
+    if (currentChar === '\n') { // Check for newline character
+      while (currentPosition < textElement.textContent.length && (textElement.textContent.charAt(currentPosition) === '\n' || textElement.textContent.charAt(currentPosition) === ' ')) {
+        currentPosition++;
+      }
+    } else {
+      currentPosition++;
+    }
+  }
+
+  const counter = document.getElementById('counter');
+  if (counter) {
+    counter.textContent = characterCount;
+  } else {
+    console.error('counter element not found');
+  }
+  
+  if (reset_button) {
+    reset_button.addEventListener('click', function () {
       stopTimer();
       reset_count();
       reset_text();
     });
-  }
-  else{
+  } else {
     console.error('Reset button listener not found.');
   }
+}
+
+// Function to randomly choose one of the code snippets from json file
+function getRandomCodeSnippet(codeSnippets) {
+  const randomIndex = Math.floor(Math.random() * codeSnippets.length);
+  return codeSnippets[randomIndex].code;
+}
+
+// Fetch the JSON file containing code snippets
+fetch('code-snippets.json')
+  .then(response => response.json())
+  .then(data => {
+    // Store the code snippets in a variable
+    const codeSnippets = data;
+
+    // Randomly select a code snippet
+    const randomSnippet = getRandomCodeSnippet(codeSnippets);
+
+    // Display the randomly selected code snippet
+    displayCodeSnippet(randomSnippet);
+  })
+  .catch(error => console.error('Error fetching JSON:', error));
 
 
-  document.addEventListener('keydown', (event) => {
-    if (currentPosition < textContent.length){
-      const currentChar = textContent.charAt(currentPosition);
-      const pressedChar = event.key;
-    
-    if (pressedChar === "Shift"){return;}
-    if (!timerRunning){return;}
+// Function to display code snippet with correct formatting
+function displayCodeSnippet(code) {
+  const codeElement = document.querySelector('#text pre');
+  codeElement.textContent = code; // Set the text content to the formatted code
+  updateText(); // Update the text highlighting after setting the new code
+}
 
-    if (pressedChar.match(allowedKeys)) {
-
-      document.getElementById("currentChar").textContent = `${currentChar}`;
-
-      if (currentChar == pressedChar){
-        characterCount++;
-      }
-      updateText();
-      
-      if (currentChar === '\n') { // Check for newline character
-        while (currentPosition < textContent.length && (textContent.charAt(currentPosition) === '\n' || textContent.charAt(currentPosition) === ' ')) {
-          currentPosition++;
-        }
-      }
-      else {
-        currentPosition++;
-      }
-    }
-
-    const counter = document.getElementById('counter');
-    if (counter) {
-      counter.textContent = characterCount;
-    } else {
-      console.error('counter element not found');
-    }
-  } 
-})
   
-/*
-  Function to change the color of already proccesed text and the following
-  character to type.
+// Function to update text highlighting
+function updateText() {
+  const textElement = document.getElementById('text');
+  let textHTML = '';
 
-  #TODO fix that at the end of the line it shows beggining of the next line
-        as next character
-*/
-  function updateText() {
-    let textHTML = '';
-    for (let i = 0; i < textContent.length; i++) {
-      const char = textContent.charAt(i);
-      
-      if (i <= currentPosition) {
-        textHTML += `<span style="color: #FF8C00">${char}</span>`;
-      } else if (i === currentPosition + 1) {
-        textHTML += `<span style="color: #E75480">${char}</span>`;
-      } else {
-        textHTML += char;
-      }
+  for (let i = 0; i < textElement.textContent.length; i++) {
+    const char = textElement.textContent.charAt(i);
+
+    if (i <= currentPosition) {
+      textHTML += `<span style="color: #FF8C00">${char}</span>`;
+    } else if (i === currentPosition + 1) {
+      textHTML += `<span style="color: #E75480">${char}</span>`;
+    } else {
+      textHTML += char;
     }
-    textElement.innerHTML = `<pre>${textHTML}</pre>`;
-
-    if(reset_button){
-      reset_button.addEventListener('click', function(){
-        textHTML = textHTML.split('#FF8C00').join('#FFFFFF');
-        textHTML = textHTML.split('#E75480').join('#FFFFFF');
-        textElement.innerHTML = `<pre>${textHTML}</pre>`;
-      });
-    }
-
   }
+  
+  textElement.innerHTML = `<pre>${textHTML}</pre>`;
+  /*if(reset_button){
+    reset_button.addEventListener('click', function(){
+      textHTML = textHTML.split('#FF8C00').join('#FFFFFF');
+      textHTML = textHTML.split('#E75480').join('#FFFFFF');
+      textElement.innerHTML = `<pre>${textHTML}</pre>`;
+    })
+  }*/
+}
 
-});
 
+const textElement = document.getElementById('text');
+const reset_button = document.getElementById('reset_button');
 
-console.log(document.getElementById('counter').textContent);
+if (reset_button) {
+  reset_button.addEventListener('click', function () {
+    stopTimer();
+    reset_count();
+    reset_text();
+  });
+} else {
+  console.error('Reset button listener not found.');
+}
