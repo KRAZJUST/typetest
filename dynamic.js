@@ -48,18 +48,11 @@ document.addEventListener("keydown", function(event) {
   handleKey(event);
 });
 
+// Function to handle key presses and text highlighting
 function handleKey(event) {
   const textElement = document.getElementById('text');
   const reset_button = document.getElementById('reset_button');
   const allowedKeys = /^[a-zA-Z0-9\s`~!@#$%^&*()_+\-=\[\]{}\\|;':",.<>\/\?]|Enter|Backspace|Delete$/;
-
-  // Skip whitespace and newline characters until a non-whitespace character is found
-  while (currentPosition < textElement.textContent.length && (
-    textElement.textContent.charAt(currentPosition) === '\n' ||
-    textElement.textContent.charAt(currentPosition) === ' '
-  )) {
-    currentPosition++;
-  }
 
   const currentChar = textElement.textContent.charAt(currentPosition);
   const pressedChar = event.key;
@@ -91,17 +84,7 @@ function handleKey(event) {
     console.error('counter element not found');
   }
   
-  if (reset_button) {
-    reset_button.addEventListener('click', function () {
-      stopTimer();
-      reset_count();
-      reset_text();
-    });
-  } else {
-    console.error('Reset button listener not found.');
-  }
 }
-
 
 // Function to randomly choose one of the code snippets from json file
 function getRandomCodeSnippet(codeSnippets) {
@@ -109,8 +92,18 @@ function getRandomCodeSnippet(codeSnippets) {
   return codeSnippets[randomIndex].code;
 }
 
-// Fetch the JSON file containing code snippets
-fetch('code-snippets.json')
+
+// Function to display code snippet with correct formatting
+function displayCodeSnippet(code) {
+  const codeElement = document.querySelector('#text pre');
+  codeElement.textContent = code;           // Set the text content to the formatted code
+  updateText();                             // Update the text highlighting after setting the new code
+}
+
+// Function to load and display a random code snippet
+function loadRandomCodeSnippet(){
+
+  fetch('code-snippets.json')
   .then(response => response.json())
   .then(data => {
     // Store the code snippets in a variable
@@ -123,19 +116,16 @@ fetch('code-snippets.json')
     displayCodeSnippet(randomSnippet);
   })
   .catch(error => console.error('Error fetching JSON:', error));
-
-
-// Function to display code snippet with correct formatting
-function displayCodeSnippet(code) {
-  const codeElement = document.querySelector('#text pre');
-  codeElement.textContent = code; // Set the text content to the formatted code
-  updateText(); // Update the text highlighting after setting the new code
 }
 
+document.addEventListener('DOMContentLoaded', function(){
+  loadRandomCodeSnippet();
+});
   
 // Function to update text highlighting
 function updateText() {
   const textElement = document.getElementById('text');
+  textElement.style.color = 'white';
   let textHTML = '';
 
   for (let i = 0; i < textElement.textContent.length; i++) {
@@ -151,13 +141,11 @@ function updateText() {
   }
   
   textElement.innerHTML = `<pre>${textHTML}</pre>`;
-
+  
   if(reset_button){
     reset_button.addEventListener('click', function(){
-      textHTML = textHTML.split('#FF8C00').join('#FFFFFF');
-      textHTML = textHTML.split('#E75480').join('#FFFFFF');
-      textElement.innerHTML = `<pre>${textHTML}</pre>`;
-    })
+      textElement.style.color = 'white';
+    });
   }
 }
 
@@ -167,12 +155,23 @@ const textElement = document.getElementById('text');
 document.addEventListener('DOMContentLoaded', function(){
 const reset_button = document.getElementById('reset_button');
 
+// #TODO fix the highlight of the first 2 chars after resetin
 if (reset_button) {
   reset_button.addEventListener('click', function () {
     stopTimer();
     reset_count();
     reset_text();
+
+    // Load a random code snippet everytime the reset button is pressed
+    loadRandomCodeSnippet();
   });
+
+  reset_button.addEventListener('keydown', function (event) {
+    if (event.key === ' ' || event.key === 'Spacebar') {
+      event.preventDefault();
+    }
+  });
+
 } else {
   console.error('Reset button listener not found.');
 }
