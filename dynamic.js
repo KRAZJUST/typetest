@@ -1,6 +1,7 @@
 var count = 30 * 1000;
 var timer;
 var timerRunning = false;
+var timer_expired = false;
 
 function startTimer(){
   if(!timerRunning){
@@ -18,6 +19,7 @@ function startTimer(){
         alert("Time's up!");
         timerRunning = false;
         stop_cpm_timer();
+        timer_expired = true;
       }
     }, 10);
     start_cpm_update();
@@ -30,6 +32,7 @@ function stopTimer(){
   count = 30 * 1000;
   document.getElementById("timer").innerHTML = "00:30:00";
   stop_cpm_timer();
+  timer_expired = false;
 }
 
 let characterCount = 0;
@@ -69,9 +72,13 @@ function update_cpm(){
 }
 
 document.addEventListener("keydown", function(event) {
-  startTimer(); // Start the timer on keydown
-  handleKey(event);
-  update_cpm();
+  if (timer_expired) {
+    event.preventDefault(); // Prevent keyboard events when the timer is up
+  } else {
+    startTimer(); // Start the timer on keydown
+    handleKey(event);
+    update_cpm();
+  }
 });
 
 let firstNonSpaceEncountered = false;
@@ -96,16 +103,6 @@ function handleKey(event) {
     }
     updateText();
 
-//  MIGHT TRY WORKING ON THIS LATER
-/*
-    if(firstNonSpaceEncountered != true){
-      while(currentChar === ' '){
-        currentPosition++;
-        currentChar = textElement.textContent.charAt(currentPosition);
-      }
-      firstNonSpaceEncountered = true;
-    }
-*/
     if (currentChar === '\n') { // Check for newline character
       while (currentPosition < textElement.textContent.length && (textElement.textContent.charAt(currentPosition) === '\n' || textElement.textContent.charAt(currentPosition) === ' ')) {
         currentPosition++;
