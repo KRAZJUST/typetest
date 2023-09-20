@@ -5,6 +5,7 @@ var timerRunning = false;
 function startTimer(){
   if(!timerRunning){
     timerRunning = true;
+    start_time = Date.now();
     timer = setInterval(function(){
       count -= 10;
       var minutes = Math.floor((count / 1000 / 60) % 60).toString().padStart(2, '0');
@@ -16,8 +17,10 @@ function startTimer(){
         clearInterval(timer);
         alert("Time's up!");
         timerRunning = false;
+        stop_cpm_timer();
       }
     }, 10);
+    start_cpm_update();
   }
 }
 
@@ -26,10 +29,13 @@ function stopTimer(){
   clearInterval(timer);
   count = 30 * 1000;
   document.getElementById("timer").innerHTML = "00:30:00";
+  stop_cpm_timer();
 }
 
 let characterCount = 0;
 let currentPosition = 0;
+let start_time = null;
+let cmp_interval = null;
 
 function reset_count(){
   characterCount = 0;
@@ -37,16 +43,38 @@ function reset_count(){
 
   document.getElementById("currentChar").textContent = "none";
   document.getElementById("counter").textContent = "0";  
+  document.getElementById("cpm").textContent = "0";
 }
 
 function reset_text(){
+  currentPosition = 0;
   document.querySelector("#text pre").style.color = "white";
+}
+
+// Update CPM every second
+function start_cpm_update(){
+  cmp_interval = setInterval(update_cpm, 1000); 
+}
+
+function stop_cpm_timer(){
+  clearInterval(cmp_interval);
+}
+
+function update_cpm(){
+  if(start_time){
+    const elapsed_time = (Date.now() - start_time) / 1000; // in seconds
+    const cpm = (characterCount / elapsed_time) * 60;      // Character per minute
+    document.getElementById("cpm").textContent = `${cpm.toFixed(2)}`;
+  }
 }
 
 document.addEventListener("keydown", function(event) {
   startTimer(); // Start the timer on keydown
   handleKey(event);
+  update_cpm();
 });
+
+let firstNonSpaceEncountered = false;
 
 // Function to handle key presses and text highlighting
 function handleKey(event) {
@@ -68,6 +96,16 @@ function handleKey(event) {
     }
     updateText();
 
+//  MIGHT TRY WORKING ON THIS LATER
+/*
+    if(firstNonSpaceEncountered != true){
+      while(currentChar === ' '){
+        currentPosition++;
+        currentChar = textElement.textContent.charAt(currentPosition);
+      }
+      firstNonSpaceEncountered = true;
+    }
+*/
     if (currentChar === '\n') { // Check for newline character
       while (currentPosition < textElement.textContent.length && (textElement.textContent.charAt(currentPosition) === '\n' || textElement.textContent.charAt(currentPosition) === ' ')) {
         currentPosition++;
@@ -132,9 +170,9 @@ function updateText() {
     const char = textElement.textContent.charAt(i);
 
     if (i <= currentPosition) {
-      textHTML += `<span style="color: #FF8C00">${char}</span>`;
+      textHTML += `<span style="color: #FF8C00">${char}</span>`; //orange
     } else if (i === currentPosition + 1) {
-      textHTML += `<span style="color: #E75480">${char}</span>`;
+      textHTML += `<span style="color: #E75480">${char}</span>`;  //pink
     } else {
       textHTML += char;
     }
@@ -164,10 +202,11 @@ if (reset_button) {
 
     // Load a random code snippet everytime the reset button is pressed
     loadRandomCodeSnippet();
+    updateText();
   });
 
   reset_button.addEventListener('keydown', function (event) {
-    if (event.key === ' ' || event.key === 'Spacebar') {
+    if (event.key === ' ' || event.key === 'Spacebar' || event.key === 'Enter') {
       event.preventDefault();
     }
   });
