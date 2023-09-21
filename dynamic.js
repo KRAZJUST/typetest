@@ -49,8 +49,9 @@ function reset_count(){
   document.getElementById("cpm").textContent = "0";
 }
 
+// Function to reset generated text back to white and set flag typing_started to false again
 function reset_text(){
-  currentPosition = 0;
+  typing_started = false;
   document.querySelector("#text pre").style.color = "white";
 }
 
@@ -76,6 +77,9 @@ document.addEventListener("keydown", function(event) {
     event.preventDefault(); // Prevent keyboard events when the timer is up
   } else {
     startTimer(); // Start the timer on keydown
+    if (!typing_started) {
+      typing_started = true; // Set typingStarted to true when the first key is pressed
+    }
     handleKey(event);
     update_cpm();
   }
@@ -157,6 +161,10 @@ document.addEventListener('DOMContentLoaded', function(){
   loadRandomCodeSnippet();
 });
   
+
+// Flag to track whether typing has started
+let typing_started = false;
+
 // Function to update text highlighting
 function updateText() {
   const textElement = document.getElementById('text');
@@ -166,10 +174,8 @@ function updateText() {
   for (let i = 0; i < textElement.textContent.length; i++) {
     const char = textElement.textContent.charAt(i);
 
-    if (i <= currentPosition) {
+    if (typing_started && i <= currentPosition) {
       textHTML += `<span style="color: #FF8C00">${char}</span>`; //orange
-    } else if (i === currentPosition + 1) {
-      textHTML += `<span style="color: #E75480">${char}</span>`;  //pink
     } else {
       textHTML += char;
     }
@@ -190,7 +196,6 @@ const textElement = document.getElementById('text');
 document.addEventListener('DOMContentLoaded', function(){
 const reset_button = document.getElementById('reset_button');
 
-// #TODO fix the highlight of the first 2 chars after resetin
 if (reset_button) {
   reset_button.addEventListener('click', function () {
     stopTimer();
