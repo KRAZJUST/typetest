@@ -37,18 +37,13 @@
 
 
 <div class="timer">
-<p style="color: #fff" id="timer">00:30:00</p>
+<p style="color: #fff;" id="timer">00:30:00</p>
 </div>
 
-<div class="columns">
-  <div class="column" style="margin-left: 25%;">
+<div class="columns" style="display: grid; grid-template-columns: repeat(2, 1fr); justify-items: center; width: 100%;">
+  <div class="column" >
     <p style="color: #fff;">correct characters:</p>
     <p style="color: #fff" id="counter">0</p>
-  </div>
-
-  <div class="column" style="margin-right: 2%;">
-    <p style="color: #fff">current character:</p>
-    <p style="color: #fff" id="currentChar">none</p>
   </div>
 
   <div class="column">
@@ -58,7 +53,7 @@
 </div>
 
 
-<div style="margin-left: 45%; margin-bottom: 20px;">
+<div style="display: flex; justify-content: center;">
   <button id="reset_button" type="button">RESET</button>
 </div>
 

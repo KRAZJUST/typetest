@@ -26,7 +26,6 @@ function startTimer(){
 
       if(count <= 0){
         clearInterval(timer);
-        alert("Time's up!");
         timerRunning = false;
         stop_cpm_timer();
         timer_expired = true;
@@ -49,13 +48,12 @@ function stopTimer(){
 }
 
 /*
-* Function to reset the variables used to count current position and written characters
+* Function to reset the variables used to count current position and written
 */
 function reset_count(){
   characterCount = 0;
   currentPosition = 0;
 
-  document.getElementById("currentChar").textContent = "none";
   document.getElementById("counter").textContent = "0";  
   document.getElementById("cpm").textContent = "0";
 }
@@ -127,8 +125,6 @@ function handleKey(event) {
   if (!timerRunning) { return; }
 
   if (pressedChar.match(allowedKeys)) {
-    document.getElementById("currentChar").textContent = `${currentChar}`;
-
     if (currentChar == pressedChar) {
       characterCount++;
     }
