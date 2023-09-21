@@ -132,14 +132,18 @@ function getRandomCodeSnippet(codeSnippets) {
 }
 
 
-// Function to display code snippet with correct formatting
+/*
+* Function to display code snippet with correct formatting
+*/
 function displayCodeSnippet(code) {
-  const codeElement = document.querySelector('#text pre');
-  codeElement.textContent = code;           // Set the text content to the formatted code
-  updateText();                             // Update the text highlighting after setting the new code
+  const codeElement = document.querySelector('#text pre');                      
+  codeElement.textContent = code;
+  updateText();
 }
 
-// Function to load and display a random code snippet
+/* 
+*  Function to load and display a random code snippet
+*/
 function loadRandomCodeSnippet(){
 
   fetch('code-snippets.json')
@@ -151,8 +155,11 @@ function loadRandomCodeSnippet(){
     // Randomly select a code snippet
     const randomSnippet = getRandomCodeSnippet(codeSnippets);
 
+    // Remove leading and trailing whitespaces
+    const trimmed_snippet = randomSnippet.trim();
+
     // Display the randomly selected code snippet
-    displayCodeSnippet(randomSnippet);
+    displayCodeSnippet(trimmed_snippet);
   })
   .catch(error => console.error('Error fetching JSON:', error));
 }
@@ -213,6 +220,7 @@ if (reset_button) {
     }
   });
 
+  reset_button.click();
 } else {
   console.error('Reset button listener not found.');
 }
