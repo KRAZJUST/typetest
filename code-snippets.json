@@ -29,7 +29,7 @@
     },
     {
       "id": 8,
-      "code": "import java.util.Arrays;\n\npublic class ArrayUtils {\n  public static int[] mergeArrays(int[] arr1, int[] arr2) {\n    int[] merged = new int[arr1.length + arr2.length];\n    int i = 0, j = 0, k = 0;\n    while (i < arr1.length && j < arr2.length) {\n      if (arr1[i] < arr2[j]) {\n        merged[k++] = arr1[i++];\n      } else {\n        merged[k++] = arr2[j++];\n      }\n    }\n    while (i < arr1.length) {\n      merged[k++] = arr1[i++];\n    }\n    while (j < arr2.length) {\n      merged[k++] = arr2[j++];\n    }\n    return merged;\n  }\n}"
+      "code": "public class ArrayUtils {\n  public static int[] mergeArrays(int[] arr1, int[] arr2) {\n    int[] merged = new int[arr1.length + arr2.length];\n    int i = 0, j = 0, k = 0;\n    while (i < arr1.length && j < arr2.length) {\n      if (arr1[i] < arr2[j]) {\n        merged[k++] = arr1[i++];\n      } else {\n        merged[k++] = arr2[j++];\n      }\n    }\n    while (i < arr1.length) {\n      merged[k++] = arr1[i++];\n    }\n    while (j < arr2.length) {\n      merged[k++] = arr2[j++];\n    }\n    return merged;\n  }\n}"
     },
     {
       "id": 9,
@@ -54,6 +54,59 @@
     {
       "id": 14,
       "code": "def power(base, exponent):\n    if exponent == 0:\n        return 1\n    result = base\n    for _ in range(exponent - 1):\n        result *= base\n    return result"
+    },
+    {
+      "id": 15,
+      "code": "function mergeSort(arr) {\n  if (arr.length <= 1) return arr;\n\n  const middle = Math.floor(arr.length / 2);\n  const left = arr.slice(0, middle);\n  const right = arr.slice(middle);\n\n  const merge = (left, right) => {\n    let result = [];\n    let leftIndex = 0;\n    let rightIndex = 0;\n\n    while (leftIndex < left.length && rightIndex < right.length) {\n      if (left[leftIndex] < right[rightIndex]) {\n        result.push(left[leftIndex]);\n        leftIndex++;\n      } else {\n        result.push(right[rightIndex]);\n        rightIndex++;\n      }\n    }\n\n    return result.concat(left.slice(leftIndex), right.slice(rightIndex));\n  };\n\n  return merge(mergeSort(left), mergeSort(right));\n}"
+    },
+    {
+      "id": 17,
+      "code": "const http = require('http');\n\nconst server = http.createServer((req, res) => {\n  res.statusCode = 200;\n  res.setHeader('Content-Type', 'text/plain');\n  res.end('Hello, World!');\n});\n\nconst port = 3000;\nserver.listen(port, () => {\n  console.log(`Server running at http://localhost:${port}/`);\n});"
+    },
+    {
+      "id": 18,
+      "code": "const express = require('express');\nconst app = express();\nconst port = 3000;\n\napp.get('/', (req, res) => {\n  res.send('Hello, World!');\n});\n\napp.listen(port, () => {\n  console.log(`Server is running on port ${port}`);\n});"
+    },
+    
+    {
+      "id": 20,
+      "code": "const mongoose = require('mongoose');\nmongoose.connect('mongodb://localhost/mydb', { useNewUrlParser: true, useUnifiedTopology: true });\n\nconst db = mongoose.connection;\ndb.on('error', console.error.bind(console, 'connection error:'));\ndb.once('open', () => {\n  console.log('Connected to MongoDB');\n});"
+    },
+    
+    {
+      "id": 21,
+      "code": "import java.util.List;\nimport java.util.stream.Collectors;\n\npublic class StreamExample {\n  public static List<Integer> filterEvenNumbers(List<Integer> numbers) {\n    return numbers.stream()\n      .filter(n -> n % 2 == 0)\n      .collect(Collectors.toList());\n  }\n}"
+    },
+    
+    {
+      "id": 22,
+      "code": "const axios = require('axios');\n\nasync function fetchUserData(username) {\n  try {\n    const response = await axios.get(`https://api.github.com/users/${username}`);\n    return response.data;\n  } catch (error) {\n    throw error;\n  }\n}"
+    },
+    
+    {
+      "id": 23,
+      "code": "class LinkedList {\n  constructor() {\n    this.head = null;\n  }\n\n  append(data) {\n    const newNode = new Node(data);\n    if (!this.head) {\n      this.head = newNode;\n    } else {\n      let current = this.head;\n      while (current.next) {\n        current = current.next;\n      }\n      current.next = newNode;\n    }\n  }\n}"
+    },
+    
+    {
+      "id": 24,
+      "code": "const fs = require('fs');\n\nfunction readFileContent(filePath) {\n  return new Promise((resolve, reject) => {\n    fs.readFile(filePath, 'utf8', (err, data) => {\n      if (err) {\n        reject(err);\n      } else {\n        resolve(data);\n      }\n    });\n  });\n}"
+    },
+    
+    {
+      "id": 25,
+      "code": "import { useState, useEffect } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  useEffect(() => {\n    document.title = `Count: ${count}`;\n  }, [count]);\n\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>Increment</button>\n    </div>\n  );\n}"
+    },
+    
+    {
+      "id": 26,
+      "code": "const jwt = require('jsonwebtoken');\n\nfunction generateToken(payload, secret) {\n  return jwt.sign(payload, secret, { expiresIn: '1h' });\n}\n\nfunction verifyToken(token, secret) {\n  try {\n    return jwt.verify(token, secret);\n  } catch (error) {\n    throw error;\n  }\n}"
+    },
+    
+    {
+      "id": 27,
+      "code": "import { createStore } from 'redux';\n\nconst initialState = { count: 0 };\n\nfunction reducer(state = initialState, action) {\n  switch (action.type) {\n    case 'INCREMENT':\n      return { count: state.count + 1 };\n    case 'DECREMENT':\n      return { count: state.count - 1 };\n    default:\n      return state;\n  }\n}\n\nconst store = createStore(reducer);"
     }
+    
 ]
   
