@@ -1,6 +1,7 @@
 html{
   height: 100%;
   font-family: 'Tebuchet MS';
+  padding: 0;
 }
 
 body{
@@ -15,8 +16,8 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  padding-top: 50px;
+  height: 150%;
+  min-height: 475px;
 }
 
 .header1{
@@ -29,7 +30,7 @@ body{
   font-size: 50px;
   color: #fff;
   margin-top: -1%;
-  margin-bottom: -5%;
+  margin-bottom: 0%;
 }
 
 .timer{
@@ -43,12 +44,5 @@ body{
   padding-top: 50px;
 }
 
-.columns {
-  display: flex;
-  justify-content: space-between;
-}
 
-.column {
-  flex: 1;
-}
 

@@ -28,10 +28,6 @@
       "code": "def binary_search(arr, target):\n    left, right = 0, len(arr) - 1\n    while left <= right:\n        mid = left + (right - left) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return -1"
     },
     {
-      "id": 8,
-      "code": "public class ArrayUtils {\n  public static int[] mergeArrays(int[] arr1, int[] arr2) {\n    int[] merged = new int[arr1.length + arr2.length];\n    int i = 0, j = 0, k = 0;\n    while (i < arr1.length && j < arr2.length) {\n      if (arr1[i] < arr2[j]) {\n        merged[k++] = arr1[i++];\n      } else {\n        merged[k++] = arr2[j++];\n      }\n    }\n    while (i < arr1.length) {\n      merged[k++] = arr1[i++];\n    }\n    while (j < arr2.length) {\n      merged[k++] = arr2[j++];\n    }\n    return merged;\n  }\n}"
-    },
-    {
       "id": 9,
       "code": "const isPrime = (num) => {\n  if (num <= 1) return false;\n  if (num <= 3) return true;\n  if (num % 2 === 0 || num % 3 === 0) return false;\n  let i = 5;\n  while (i * i <= num) {\n    if (num % i === 0 || num % (i + 2) === 0) return false;\n    i += 6;\n  }\n  return true;\n};"
     },
@@ -50,11 +46,6 @@
     {
       "id": 13,
       "code": "public class LinkedListNode {\n  int data;\n  LinkedListNode next;\n\n  public LinkedListNode(int data) {\n    this.data = data;\n    this.next = null;\n  }\n}"
-    },
-
-    {
-      "id": 15,
-      "code": "function mergeSort(arr) {\n  if (arr.length <= 1) return arr;\n\n  const middle = Math.floor(arr.length / 2);\n  const left = arr.slice(0, middle);\n  const right = arr.slice(middle);\n\n  const merge = (left, right) => {\n    let result = [];\n    let leftIndex = 0;\n    let rightIndex = 0;\n\n    while (leftIndex < left.length && rightIndex < right.length) {\n      if (left[leftIndex] < right[rightIndex]) {\n        result.push(left[leftIndex]);\n        leftIndex++;\n      } else {\n        result.push(right[rightIndex]);\n        rightIndex++;\n      }\n    }\n\n    return result.concat(left.slice(leftIndex), right.slice(rightIndex));\n  };\n\n  return merge(mergeSort(left), mergeSort(right));\n}"
     },
     {
       "id": 17,
@@ -82,7 +73,7 @@
     
     {
       "id": 23,
-      "code": "class LinkedList {\n  constructor() {\n    this.head = null;\n  }\n\n  append(data) {\n    const newNode = new Node(data);\n    if (!this.head) {\n      this.head = newNode;\n    } else {\n      let current = this.head;\n      while (current.next) {\n        current = current.next;\n      }\n      current.next = newNode;\n    }\n  }\n}"
+      "code": "class LinkedList {\n  constructor() {\n    this.head = null;\n  }\n  append(data) {\n    const newNode = new Node(data);\n    if (!this.head) {\n      this.head = newNode;\n    } else {\n      let current = this.head;\n      while (current.next) {\n        current = current.next;\n      }\n      current.next = newNode;\n    }\n  }\n}"
     },
     
     {
@@ -98,7 +89,39 @@
     {
       "id": 27,
       "code": "import { createStore } from 'redux';\n\nconst initialState = { count: 0 };\n\nfunction reducer(state = initialState, action) {\n  switch (action.type) {\n    case 'INCREMENT':\n      return { count: state.count + 1 };\n    case 'DECREMENT':\n      return { count: state.count - 1 };\n    default:\n      return state;\n  }\n}\n\nconst store = createStore(reducer);"
+    },
+    {
+      "id": 28,
+      "code": "public class Factorial {\n  public static void main(String[] args) {\n    int n = 5;\n    int factorial = 1;\n    for (int i = 1; i <= n; i++) {\n      factorial *= i;\n    }\n    System.out.println(\"Factorial of \" + n + \" is \" + factorial);\n  }\n}"
+    },
+    {
+      "id": 29,
+      "code": "using System;\n\nclass Fibonacci {\n  static void Main() {\n    int n = 10;\n    int a = 0, b = 1;\n    Console.Write(\"Fibonacci Series: \");\n    for (int i = 0; i < n; i++) {\n      Console.Write(a + \" \");\n      int temp = a;\n      a = b;\n      b = temp + b;\n    }\n  }\n}"
+    },
+    {
+      "id": 30,
+      "code": "public class Palindrome {\n  public static void main(String[] args) {\n    String str = \"racecar\";\n    String reverse = new StringBuilder(str).reverse().toString();\n    if (str.equals(reverse)) {\n      System.out.println(str + \" is a palindrome.\");\n    } else {\n      System.out.println(str + \" is not a palindrome.\");\n    }\n  }\n}"
+    },
+    {
+      "id": 31,
+      "code": "public class PrimeNumbers {\n  public static void main(String[] args) {\n    int n = 20;\n    System.out.println(\"Prime numbers up to \" + n + \":\");\n    for (int i = 2; i <= n; i++) {\n      boolean isPrime = true;\n      for (int j = 2; j < i; j++) {\n        if (i % j == 0) {\n          isPrime = false;\n          break;\n        }\n      }\n      if (isPrime) {\n        System.out.print(i + \" \");\n      }\n    }\n  }\n}"
+    },
+    {
+      "id": 32,
+      "code": "using System;\n\nclass GCD {\n  static void Main() {\n    int num1 = 48, num2 = 36;\n    int gcd = 1;\n    for (int i = 1; i <= num1 && i <= num2; i++) {\n      if (num1 % i == 0 && num2 % i == 0) {\n        gcd = i;\n      }\n    }\n    Console.WriteLine(\"GCD of \" + num1 + \" and \" + num2 + \" is \" + gcd);\n  }\n}"
+    },
+    {
+      "id": 33,
+      "code": "public class EvenOddSum {\n  public static void main(String[] args) {\n    int n = 10;\n    int evenSum = 0, oddSum = 0;\n    for (int i = 1; i <= n; i++) {\n      if (i % 2 == 0) {\n        evenSum += i;\n      } else {\n        oddSum += i;\n      }\n    }\n    System.out.println(\"Sum of even numbers: \" + evenSum);\n    System.out.println(\"Sum of odd numbers: \" + oddSum);\n  }\n}"
+    },
+    {
+      "id": 34,
+      "code": "using System;\n\nclass ArrayAverage {\n  static void Main() {\n    int[] numbers = { 5, 10, 15, 20, 25 };\n    int sum = 0;\n    foreach (int number in numbers) {\n      sum += number;\n    }\n    double average = (double)sum / numbers.Length;\n    Console.WriteLine(\"Average: \" + average);\n  }\n}"
+    },
+    {
+      "id": 35,
+      "code": "public class ArraySum {\n  public static void main(String[] args) {\n    int[] numbers = { 3, 6, 9, 12, 15 };\n    int sum = 0;\n    for (int number : numbers) {\n      sum += number;\n    }\n    System.out.println(\"Sum: \" + sum);\n  }\n}"
     }
-    
+     
 ]
   
