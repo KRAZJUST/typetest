@@ -108,7 +108,7 @@
     },
     {
       "id": 32,
-      "code": "using System;\n\nclass GCD {\n  static void Main() {\n    int num1 = 48, num2 = 36;\n    int gcd = 1;\n    for (int i = 1; i <= num1 && i <= num2; i++) {\n      if (num1 % i == 0 && num2 % i == 0) {\n        gcd = i;\n      }\n    }\n    Console.WriteLine(\"GCD of \" + num1 + \" and \" + num2 + \" is \" + gcd);\n  }\n}"
+      "code": "using System;\n\nclass GCD {\n  static void Main() {\n    int num1 = 48, num2 = 36;\n    int gcd = 1;\n    for (int i = 1; i <= num1 && i <= num2; i++) {\n      if (num1 % i == 0 && num2 % i == 0) {\n        gcd = i;\n      }\n    }\n    Console.WriteLine(\"GCD of \" + num1 + \" and \" + num2 + \" is \" + gcd);\n  }}"
     },
     {
       "id": 33,
